@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("todos")
+@CrossOrigin(origins = "http://localhost:3000")
 public class TodoController {
     @Autowired
     TodoService todoService;
@@ -33,6 +34,6 @@ public class TodoController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deleteTodoItem(@PathVariable String id) {
-        todoService.delete(id);
+         todoService.delete(id);
     }
 }
