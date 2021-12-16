@@ -5,6 +5,12 @@ public class TodoItem {
     private String id;
     private Boolean done;
 
+    public TodoItem(String id, String text, Boolean done) {
+        this.text = text;
+        this.id = id;
+        this.done = done;
+    }
+
     public String getText() {
         return text;
     }
