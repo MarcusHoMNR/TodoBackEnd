@@ -1,8 +1,14 @@
 package com.example.todoList.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
+@Document
 public class TodoItem {
-    private String text;
+    @MongoId(FieldType.OBJECT_ID)
     private String id;
+    private String text;
     private Boolean done;
 
     public TodoItem(String id, String text, Boolean done) {
