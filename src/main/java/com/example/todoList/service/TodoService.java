@@ -27,11 +27,10 @@ public class TodoService {
 
     public TodoItem edit(String id, TodoItem updatedTodoItem) {
         TodoItem todoItem = todoRepository.findById(id).orElseThrow(NoTodoItemFoundException::new);
-        if (updatedTodoItem.getText() != null) {
+        if (updatedTodoItem.getText() != null && !updatedTodoItem.getText().equals(todoItem.getText())) {
             todoItem.setText(updatedTodoItem.getText());
-        }
-        if (updatedTodoItem.isDone() != null) {
-            todoItem.setDone(updatedTodoItem.isDone());
+        } else {
+            todoItem.setDone(!todoItem.isDone());
         }
 
         return todoRepository.save(todoItem);
