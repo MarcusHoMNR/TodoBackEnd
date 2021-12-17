@@ -93,7 +93,7 @@ public class TodoControllerTest {
 
         //when
         //then
-        mockMvc.perform(put("/todos/{id}", "61b1c0ca8093f31e20c3c451")
+        mockMvc.perform(put("/todos/{id}", todoRepository.findAll().get(0).getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(item))
                 .andExpect(status().isOk())
@@ -113,7 +113,7 @@ public class TodoControllerTest {
 
         //when
         //then
-        mockMvc.perform(put("/todos/{id}", "61b1c0ca8093f31e20c3c451")
+        mockMvc.perform(put("/todos/{id}", todoRepository.findAll().get(0).getId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(item))
                 .andExpect(status().isOk())
@@ -124,8 +124,8 @@ public class TodoControllerTest {
 
 
     private void insert_items_to_repo() {
-        TodoItem todoItem1 = new TodoItem("61b1c0ca8093f31e20c3c451", "Spring", false);
-        TodoItem todoItem2 = new TodoItem("61b1c0ca8093f31e20c3c452", "Spring2", true);
+        TodoItem todoItem1 = new TodoItem("Spring", false);
+        TodoItem todoItem2 = new TodoItem("Spring2", true);
 
         todoRepository.insert(todoItem1);
         todoRepository.insert(todoItem2);

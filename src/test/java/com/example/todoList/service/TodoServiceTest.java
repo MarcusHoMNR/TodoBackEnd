@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -58,7 +59,7 @@ public class TodoServiceTest {
     @Test
     void should_return_created_item_when_create_given_newTodoItem() {
         //given
-        TodoItem newTodoItem = new TodoItem("61b1c0ca8093f31e20c3c453", "Text 3", false);
+        TodoItem newTodoItem = new TodoItem("Text 3", false);
 
         given(mockTodoRepository.insert(newTodoItem))
                 .willReturn(newTodoItem);
@@ -82,7 +83,7 @@ public class TodoServiceTest {
     @Test
     void should_return_updated_done_item_when_update_given_id_and_TodoItem() {
         //given
-        TodoItem existingTodoItem = new TodoItem("61b1c0ca8093f31e20c3c451", "Text 1", false);
+        TodoItem existingTodoItem = new TodoItem("Text 1", false);
 
         TodoItem updatedTodoItem = existingTodoItem;
         updatedTodoItem.setDone(true);
@@ -104,14 +105,15 @@ public class TodoServiceTest {
     @Test
     void should_return_updated_text_item_when_update_given_id_and_TodoItem() {
         //given
-        TodoItem existingTodoItem = new TodoItem("61b1c0ca8093f31e20c3c451", "Text 1", true);
-        TodoItem updatedTodoItem = existingTodoItem;
-        updatedTodoItem.setText("Text 2");
-        
+        TodoItem updatedTodoItem = new TodoItem("Text 2", true);
+        TodoItem existingTodoItem = new TodoItem( "Text 1", true);
+
+
         given(mockTodoRepository.findById("61b1c0ca8093f31e20c3c451"))
                 .willReturn(Optional.of(existingTodoItem));
+        existingTodoItem.setText(updatedTodoItem.getText());
 
-        given(mockTodoRepository.save(existingTodoItem))
+        given(mockTodoRepository.save(any(TodoItem.class)))
                 .willReturn(updatedTodoItem);
 
         //when
@@ -130,14 +132,14 @@ public class TodoServiceTest {
 
         //when
         //then
-        assertThrows(NoTodoItemFoundException.class, () -> todoService.edit("61b1c0ca8093f31e20c3c451", new TodoItem("61b1c0ca8093f31e20c3c451", "Text 1", false)));
+        assertThrows(NoTodoItemFoundException.class, () -> todoService.edit("61b1c0ca8093f31e20c3c451", new TodoItem("Text 1", false)));
     }
 
 
     private List<TodoItem> createTodoItems() {
         return new ArrayList<>(Arrays.asList(
-                new TodoItem("61b1c0ca8093f31e20c3c451", "Text 1", false)
-                , new TodoItem("61b1c0ca8093f31e20c3c452", "Text 2", true)
+                new TodoItem("Text 1", false)
+                , new TodoItem("Text 2", true)
         ));
     }
 }

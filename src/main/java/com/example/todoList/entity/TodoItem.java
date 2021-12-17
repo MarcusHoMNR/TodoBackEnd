@@ -11,10 +11,8 @@ public class TodoItem {
     private String text;
     private Boolean done;
 
-    // TODO no need id
-    public TodoItem(String id, String text, Boolean done) {
+    public TodoItem(String text, Boolean done) {
         this.text = text;
-        this.id = id;
         this.done = done;
     }
 
