@@ -87,7 +87,8 @@ public class TodoControllerTest {
         //given
         insert_items_to_repo();
         String item = "{\n" +
-                "    \"text\": \"Spring\"\n" +
+                "    \"text\": \"Spring\",\n" +
+                "    \"done\": \"true\"\n" +
                 "}";
 
         //when
@@ -106,7 +107,8 @@ public class TodoControllerTest {
         //given
         insert_items_to_repo();
         String item = "{\n" +
-                "    \"text\": \"Spring3\"\n" +
+                "    \"text\": \"Spring3\",\n" +
+                "    \"done\": \"false\"\n" +
                 "}";
 
         //when

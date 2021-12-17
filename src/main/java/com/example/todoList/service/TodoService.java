@@ -27,12 +27,15 @@ public class TodoService {
 
     public TodoItem edit(String id, TodoItem updatedTodoItem) {
         TodoItem todoItem = todoRepository.findById(id).orElseThrow(NoTodoItemFoundException::new);
-        if (updatedTodoItem.getText() != null && !updatedTodoItem.getText().equals(todoItem.getText())) {
-            todoItem.setText(updatedTodoItem.getText());
-        } else {
-            todoItem.setDone(!todoItem.isDone());
+        if (updatedTodoItem == null || (updatedTodoItem.getText().equals(todoItem.getText()) && updatedTodoItem.isDone().equals(todoItem.isDone()))) {
+            return todoItem;
         }
 
+        if (updatedTodoItem.getText() != null && !updatedTodoItem.getText().equals(todoItem.getText())) {
+            todoItem.setText(updatedTodoItem.getText());
+        } else if (updatedTodoItem.isDone() != null && !updatedTodoItem.isDone().equals(todoItem.isDone())){
+            todoItem.setDone(updatedTodoItem.isDone());
+        }
         return todoRepository.save(todoItem);
     }
 }

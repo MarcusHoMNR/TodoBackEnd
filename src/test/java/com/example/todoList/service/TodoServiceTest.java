@@ -71,7 +71,7 @@ public class TodoServiceTest {
     }
 
     @Test
-    void should_called_repo_delete_once_when_delete_given_id_and_TodoItems() {
+    void should_called_repo_deleteById_once_when_delete_given_id_and_TodoItems() {
         //when
         todoService.delete("61b1c0ca8093f31e20c3c451");
 
@@ -82,14 +82,16 @@ public class TodoServiceTest {
     @Test
     void should_return_updated_done_item_when_update_given_id_and_TodoItem() {
         //given
-        TodoItem updatedTodoItem = new TodoItem("61b1c0ca8093f31e20c3c451", "Text 1", true);
         TodoItem existingTodoItem = new TodoItem("61b1c0ca8093f31e20c3c451", "Text 1", false);
+
+        TodoItem updatedTodoItem = existingTodoItem;
+        updatedTodoItem.setDone(true);
+
 
         given(mockTodoRepository.findById("61b1c0ca8093f31e20c3c451"))
                 .willReturn(Optional.of(existingTodoItem));
 
-        existingTodoItem.setDone(true);
-        given(mockTodoRepository.save(existingTodoItem))
+        given(mockTodoRepository.save(updatedTodoItem))
                 .willReturn(updatedTodoItem);
 
         //when
@@ -102,13 +104,13 @@ public class TodoServiceTest {
     @Test
     void should_return_updated_text_item_when_update_given_id_and_TodoItem() {
         //given
-        TodoItem updatedTodoItem = new TodoItem("61b1c0ca8093f31e20c3c451", "Text 2", true);
         TodoItem existingTodoItem = new TodoItem("61b1c0ca8093f31e20c3c451", "Text 1", true);
-
+        TodoItem updatedTodoItem = existingTodoItem;
+        updatedTodoItem.setText("Text 2");
+        
         given(mockTodoRepository.findById("61b1c0ca8093f31e20c3c451"))
                 .willReturn(Optional.of(existingTodoItem));
 
-        existingTodoItem.setText("Text 2");
         given(mockTodoRepository.save(existingTodoItem))
                 .willReturn(updatedTodoItem);
 
